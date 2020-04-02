@@ -1,0 +1,11 @@
+name:"UNET"
+layer {
+  name: "data"
+  type: "Python"
+  top: "img"
+  top: "mask"
+  python_param{
+    module: 'mydatalayer'
+    layer: 'DataLayer'
+	}
+}

@@ -1,0 +1,20 @@
+net: "/home/yshi10/unet/train_val1.prototxt"  # Change this to the absolute path to your model file
+test_initialization: true
+test_iter: 100
+test_interval: 100
+base_lr: 0.0001
+lr_policy: "multistep"
+gamma: 0.1
+stepvalue: 18750
+stepvalue: 37500
+stepvalue: 56250
+display: 20
+momentum: 0.9
+max_iter: 75000
+weight_decay: 0.0002
+snapshot: 1000
+snapshot_prefix: "/home/yshi10/unet/weight/"  # Change this to the absolute path to where you wish to output solver snapshots
+solver_mode: GPU
+solver_type: ADAM
+momentum2: 0.999
+
