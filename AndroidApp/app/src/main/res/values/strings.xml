@@ -1,0 +1,12 @@
+<resources>
+    <string name="tfe_is_app_name" translatable="false">TFL Image Segmentation</string>
+    <string name="tfe_is_gpu" translatable="false">GPU</string>
+    <string name="tfe_is_re_run_model" translatable="false">Re-run model</string>
+    <string name="tfe_is_labels_found" translatable="false">Labels Found</string>
+    <string name="tfe_is_no_labels_found" translatable="false">No Labels Found</string>
+    <string name="source_google_drive">Google Drive</string>
+    <string name="status_user_cancelled">User Cancelled</string>
+    <string name="status_error">We found a problem: %1$s</string>
+    <string name="not_open_file">Could not open file</string>
+
+</resources>
