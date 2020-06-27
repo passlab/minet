@@ -45,15 +45,24 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.api.client.extensions.android.http.AndroidHttp
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.json.gson.GsonFactory
+import com.google.api.services.drive.Drive
+import com.google.api.services.drive.DriveScopes
+import com.google.gson.Gson
 import java.io.File
 import java.util.concurrent.Executors
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import org.tensorflow.lite.examples.imagesegmentation.camera.CameraFragment
+import java.util.*
+import kotlin.collections.HashSet
 
 // This is an arbitrary number we are using to keep tab of the permission
 // request. Where an app has multiple context for requesting permission,
@@ -83,8 +92,8 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
   private lateinit var imageSegmentationModel: ImageSegmentationModelExecutor
   private val inferenceThread = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
   private val mainScope = MainScope()
-
   private var lensFacing = CameraCharacteristics.LENS_FACING_FRONT
+    private val RC_BROWSE_DRIVE=9002
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -97,7 +106,7 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
 
     //google signin
     val googleSignInOptions:GoogleSignInOptions= GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().requestScopes(Scope(DriveScopes.DRIVE_FILE)).build()
 
 
     val mGoogleSignInClient:GoogleSignInClient =GoogleSignIn.getClient(this,googleSignInOptions)
@@ -160,12 +169,9 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
         startActivityForResult(intent, RC_SIGN_IN)
       }else{
         Toast.makeText(this,"User Already Signed In", Toast.LENGTH_LONG).show()
+          navigate(account)
       }
     }
-
-
-
-
 
     animateCameraButton()
 
@@ -327,8 +333,34 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
       if (result != null) {
           print(result.signInAccount.toString())
           Toast.makeText(this,"Sign In Successful", Toast.LENGTH_LONG).show()
+          navigate(result.signInAccount)
         }
-      }
-    }
-}
+      }else if(requestCode==RC_BROWSE_DRIVE){
 
+    }
+
+    }
+
+
+    fun navigate(account:GoogleSignInAccount?){
+
+      var credentials:GoogleAccountCredential= GoogleAccountCredential.usingOAuth2(this, Collections.singleton(DriveScopes.DRIVE_FILE))
+
+      if(account!=null){
+        credentials.setSelectedAccount(account.account)
+        val googleDriveService: Drive = Drive.Builder(AndroidHttp.newCompatibleTransport(),GsonFactory(),credentials).setApplicationName("Browse").build()
+
+
+      }
+
+
+
+      val intent=Intent(this,BrowseGoogleDrive::class.java)
+        intent.putExtra("SignedInAccount",account)
+        startActivityForResult(intent,RC_BROWSE_DRIVE)
+    }
+
+
+
+
+}
