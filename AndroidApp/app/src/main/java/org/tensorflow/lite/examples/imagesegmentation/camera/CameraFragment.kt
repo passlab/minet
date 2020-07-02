@@ -19,6 +19,8 @@ package org.tensorflow.lite.examples.imagesegmentation.camera
 import android.annotation.SuppressLint
 import androidx.lifecycle.Observer
 import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.Bitmap
 import android.graphics.ImageFormat
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
@@ -42,13 +44,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
-import java.io.Closeable
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.TimeoutException
 import kotlin.coroutines.resume
@@ -59,6 +55,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.tensorflow.lite.examples.imagesegmentation.ImageUtils
+import java.io.*
+import java.util.*
 
 class CameraFragment : Fragment() {
 
@@ -300,6 +298,57 @@ class CameraFragment : Fragment() {
       }
     }
   }
+
+  fun openDriveImage(bmp: Bitmap) {
+    // Perform I/O heavy operations in a different scope
+    fragmentScope.launch(Dispatchers.IO) {
+        // Save the result to disk
+        val output =  bitmapToFile(bmp)
+        Log.d(TAG, "Image saved: ${output.absolutePath}")
+
+        // If the result is a JPEG file, update EXIF metadata with orientation info
+        if (output.extension == "jpg") {
+          ImageUtils.setExifOrientation(output.absolutePath, "0")
+        }
+
+        // Display the photo taken to user
+        fragmentScope.launch(Dispatchers.Main) {
+          callback.onCaptureFinished(output)
+          Log.d(TAG, "almos viewing a picture")
+        }
+    }
+  }
+
+
+
+  // Method to save an bitmap to a file
+  private fun bitmapToFile(bitmap:Bitmap): File {
+    // Get the context wrapper
+    val wrapper = ContextWrapper(context)
+
+    // Initialize a new file instance to save bitmap object
+    var file = wrapper.getDir("Images",Context.MODE_PRIVATE)
+    file = File(file,"${UUID.randomUUID()}.jpg")
+
+    try{
+      // Compress the bitmap and save in jpg format
+      val stream: OutputStream = FileOutputStream(file)
+      bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+      stream.flush()
+      stream.close()
+    }catch (e:IOException){
+      e.printStackTrace()
+    }
+
+    // Return the saved bitmap uri
+    return file
+  }
+
+
+
+
+
+
 
   /**
    * Helper function used to capture a still image using the [CameraDevice.TEMPLATE_STILL_CAPTURE]

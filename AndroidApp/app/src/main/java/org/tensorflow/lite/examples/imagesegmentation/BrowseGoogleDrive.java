@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -25,13 +27,13 @@ public class BrowseGoogleDrive extends AppCompatActivity {
     private String mOpenFileId;
     private static final int REQUEST_CODE_OPEN_DOCUMENT = 2;
     private EditText mFileTitleEditText;
-    private EditText mDocContentEditText;
+    private ImageView mImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_google_drive);
         mFileTitleEditText = findViewById(R.id.file_title_edittext);
-        mDocContentEditText = findViewById(R.id.doc_content_edittext);
+        mImageView=findViewById(R.id.iv_image);
         if(getIntent()!=null && getIntent().getExtras()!=null){
             GoogleSignInAccount account= (GoogleSignInAccount) getIntent().getExtras().get("SignedInAccount");
 
@@ -72,11 +74,10 @@ public class BrowseGoogleDrive extends AppCompatActivity {
             mDriveServiceHelper.openFileUsingStorageAccessFramework(getContentResolver(), uri)
                     .addOnSuccessListener(nameAndContent -> {
                         String name = nameAndContent.first;
-                        String content = nameAndContent.second;
+                        Bitmap image = nameAndContent.second;
 
                         mFileTitleEditText.setText(name);
-                        mDocContentEditText.setText(content);
-
+                        mImageView.setImageBitmap(image);
                         // Files opened through SAF cannot be modified.
                         setReadOnlyMode();
                     })
@@ -95,7 +96,6 @@ public class BrowseGoogleDrive extends AppCompatActivity {
                         String content = nameAndContent.second;
 
                         mFileTitleEditText.setText(name);
-                        mDocContentEditText.setText(content);
 
                         setReadWriteMode(fileId);
                     })
@@ -105,7 +105,6 @@ public class BrowseGoogleDrive extends AppCompatActivity {
     }
     private void setReadWriteMode(String fileId) {
         mFileTitleEditText.setEnabled(true);
-        mDocContentEditText.setEnabled(true);
         mOpenFileId = fileId;
     }
 
@@ -128,9 +127,6 @@ public class BrowseGoogleDrive extends AppCompatActivity {
 
     private void setReadOnlyMode() {
         mFileTitleEditText.setEnabled(false);
-        mDocContentEditText.setEnabled(false);
         mOpenFileId = null;
     }
-
-
 }

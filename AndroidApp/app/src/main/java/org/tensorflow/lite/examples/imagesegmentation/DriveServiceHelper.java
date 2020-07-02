@@ -2,6 +2,8 @@ package org.tensorflow.lite.examples.imagesegmentation;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.util.Pair;
@@ -13,9 +15,11 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -119,11 +123,27 @@ public class DriveServiceHelper {
             return intent;
         }
 
+
+
+        public Task<Void> downloadFile(java.io.File targetFile, String fileId) {
+            return Tasks.call(mExecutor, () -> {
+
+                // Retrieve the metadata as a File object.
+                OutputStream outputStream = new FileOutputStream(targetFile);
+                mDriveService.files().get(fileId).executeMediaAndDownloadTo(outputStream);
+                return null;
+            });
+        }
+
+
+
+
+
         /**
          * Opens the file at the {@code uri} returned by a Storage Access Framework {@link Intent}
          * created by {@link #createFilePickerIntent()} using the given {@code contentResolver}.
          */
-        public Task<Pair<String, String>> openFileUsingStorageAccessFramework(
+        public Task<Pair<String, Bitmap>> openFileUsingStorageAccessFramework(
                 ContentResolver contentResolver, Uri uri) {
             return Tasks.call(mExecutor, () -> {
                 // Retrieve the document's display name from its metadata.
@@ -137,19 +157,15 @@ public class DriveServiceHelper {
                     }
                 }
 
-                // Read the document's contents as a String.
-                String content;
-                try (InputStream is = contentResolver.openInputStream(uri);
-                     BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        stringBuilder.append(line);
-                    }
-                    content = stringBuilder.toString();
+                // Read the document's contents as a bitmap.
+                Bitmap bmp;
+                try{
+                    InputStream is = contentResolver.openInputStream(uri);
+                    bmp = BitmapFactory.decodeStream(is);
+                }catch(Exception ex){
+                    throw new IOException("Error downloading file.");
                 }
-
-                return Pair.create(name, content);
+                return Pair.create(name, bmp);
             });
         }
 

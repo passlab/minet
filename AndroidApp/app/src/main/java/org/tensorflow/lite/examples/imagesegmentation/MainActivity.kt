@@ -17,6 +17,7 @@
 package org.tensorflow.lite.examples.imagesegmentation
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -24,6 +25,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.hardware.camera2.CameraCharacteristics
+import android.net.Uri
 import android.os.Bundle
 import android.os.Process
 import androidx.appcompat.app.AppCompatActivity
@@ -93,8 +95,8 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
   private val inferenceThread = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
   private val mainScope = MainScope()
   private var lensFacing = CameraCharacteristics.LENS_FACING_FRONT
-    private val RC_BROWSE_DRIVE=9002
-
+    private var mDriveServiceHelper: DriveServiceHelper? = null
+    private val REQUEST_CODE_OPEN_DOCUMENT = 2
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.tfe_is_activity_main)
@@ -335,8 +337,13 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
           Toast.makeText(this,"Sign In Successful", Toast.LENGTH_LONG).show()
           navigate(result.signInAccount)
         }
-      }else if(requestCode==RC_BROWSE_DRIVE){
-
+      }else if(requestCode==REQUEST_CODE_OPEN_DOCUMENT){
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            val uri = data.getData()
+            if (uri != null) {
+                openFileFromFilePicker(uri)
+            }
+        }
     }
 
     }
@@ -349,18 +356,50 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
       if(account!=null){
         credentials.setSelectedAccount(account.account)
         val googleDriveService: Drive = Drive.Builder(AndroidHttp.newCompatibleTransport(),GsonFactory(),credentials).setApplicationName("Browse").build()
-
-
+          openPicker(account)
       }
 
-
-
-      val intent=Intent(this,BrowseGoogleDrive::class.java)
-        intent.putExtra("SignedInAccount",account)
-        startActivityForResult(intent,RC_BROWSE_DRIVE)
     }
 
 
+    fun openPicker(account:GoogleSignInAccount){
+        val credential = GoogleAccountCredential.usingOAuth2(
+                this, setOf(DriveScopes.DRIVE_FILE))
+        credential.selectedAccount = account.account
+        val googleDriveService = Drive.Builder(
+                AndroidHttp.newCompatibleTransport(),
+                GsonFactory(),
+                credential)
+                .setApplicationName("Browse Drive")
+                .build()
+        // The DriveServiceHelper encapsulates all REST API and SAF functionality.
+        // Its instantiation is required before handling any onClick actions.
+        mDriveServiceHelper = DriveServiceHelper(googleDriveService)
+        openFilePicker()
+    }
 
+    private fun openFilePicker() {
+        if (mDriveServiceHelper != null) {
+            Log.d("BrowseGoogleDrive", "Opening file picker.")
 
+            val pickerIntent = mDriveServiceHelper!!.createFilePickerIntent()
+
+            // The result of the SAF Intent is handled in onActivityResult.
+            startActivityForResult(pickerIntent, REQUEST_CODE_OPEN_DOCUMENT)
+        }
+    }
+
+    private fun openFileFromFilePicker(uri: Uri) {
+        if (mDriveServiceHelper != null) {
+            Log.d("BrowseGoogleDrive", "Opening " + uri.path!!)
+
+            mDriveServiceHelper!!.openFileUsingStorageAccessFramework(contentResolver, uri)
+                    .addOnSuccessListener { nameAndContent ->
+                        val name = nameAndContent.first
+                        val image = nameAndContent.second
+                        cameraFragment.openDriveImage(image)
+                    }
+                    .addOnFailureListener { exception -> Log.e("BrowseGoogleDrive", "Unable to open file from picker.", exception) }
+        }
+    }
 }
