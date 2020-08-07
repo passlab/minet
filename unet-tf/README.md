@@ -83,7 +83,7 @@ Read the documentation [Keras.io](http://keras.io/)
 
 Keras is compatible with: Python 2.7-3.5.
 
-## Install Keras/Tensorflow with GPU support on Ubuntu 18.04 with NVIDIA GPU
+## Install Keras/Tensorflow with GPU support on Ubuntu 18.04 with NVIDIA GPU. Refer to https://www.tensorflow.org/install/gpu
 
 ### Add NVIDIA package repositories
 ```
