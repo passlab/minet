@@ -112,9 +112,19 @@ sudo apt-get install --no-install-recommends     cuda-10-1     libcudnn7=7.6
 sudo apt-get install -y --no-install-recommends libnvinfer6=6.0.1-1+cuda10.1 libnvinfer-dev=6.0.1-1+cuda10.1 libnvinfer-plugin6=6.0.1-1+cuda10.1
 ```
 
-### Install Tensorflow, Keras and required scikit-image
+### Install Tensorflow, Keras and required scikit-image. Refer to https://www.tensorflow.org/install/pip
 ```
+sudo apt update
+sudo apt install python3-dev python3-pip python3-venv
+python3 -m venv --system-site-packages ./tensorflow-venv #create virtual environment
+source ./tensorflow-venv/bin/activate
 pip install --upgrade pip
 pip install scikit-image keras tensorflow
+```
+
+### Run the u-net training model
+```
+python main.py
+deactivate # exit the virtual env
 ```
 
