@@ -119,16 +119,20 @@ sudo apt update
 sudo apt install python3-dev python3-pip python3-venv
 ```
 
-### Install Tensorflow, Keras and required scikit-image. Refer to https://www.tensorflow.org/install/pip
+### Install Tensorflow, Keras and required scikit-image. Refer to https://www.tensorflow.org/install/pip (only need to do once). 
 ```
 python3 -m venv --system-site-packages ./tensorflow-venv #create virtual environment
 source ./tensorflow-venv/bin/activate
 pip install --upgrade pip
 pip install scikit-image keras tensorflow
+
+deactivate # exit the virtual env
+
 ```
 
-### Run the u-net training model
+### Run the u-net training model using the previously created virtual env
 ```
+source ./tensorflow-venv/bin/activate
 python main.py
 deactivate # exit the virtual env
 ```
