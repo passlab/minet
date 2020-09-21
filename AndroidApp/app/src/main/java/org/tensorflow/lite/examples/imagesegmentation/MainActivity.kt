@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
     viewFinder = findViewById(R.id.view_finder)
     resultImageView = findViewById(R.id.result_imageview)
     originalImageView = findViewById(R.id.original_imageview)
-    maskImageView = findViewById(R.id.mask_imageview)
+    //maskImageView = findViewById(R.id.mask_imageview)
     chipsGroup = findViewById(R.id.chips_group)
     captureButton = findViewById(R.id.capture_button)
     val useGpuSwitch: Switch = findViewById(R.id.switch_use_gpu)
@@ -242,7 +242,7 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
   private fun updateUIWithResults(modelExecutionResult: ModelExecutionResult) {
     setImageView(resultImageView, modelExecutionResult.bitmapResult)
     setImageView(originalImageView, modelExecutionResult.bitmapOriginal)
-    setImageView(maskImageView, modelExecutionResult.bitmapMaskOnly)
+    //setImageView(maskImageView, modelExecutionResult.bitmapMaskOnly)
     val logText: TextView = findViewById(R.id.log_view)
     logText.text = modelExecutionResult.executionLog
 

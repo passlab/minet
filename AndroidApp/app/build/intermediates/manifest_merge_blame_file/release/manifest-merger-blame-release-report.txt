@@ -1,0 +1,128 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.tensorflow.lite.examples.imagesegmentation"
+4    android:versionCode="1"
+5    android:versionName="1.0" > <!-- Do not remove, it is needed for internal build system -->
+6    <uses-sdk
+6-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:5:5-17
+7        android:minSdkVersion="21"
+7-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:5:5-17
+8        android:targetSdkVersion="29" />
+8-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:5:5-17
+9
+10    <uses-permission android:name="android.permission.CAMERA" />
+10-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:7:5-65
+10-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:7:22-62
+11
+12    <uses-feature android:name="android.hardware.camera.any" />
+12-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:9:5-64
+12-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:9:19-61
+13
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:11:5-67
+14-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:11:22-64
+15    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+15-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:12:5-71
+15-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:12:22-68
+16    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+16-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:13:5-80
+16-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:13:22-77
+17    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+17-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:14:5-81
+17-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:14:22-78
+18
+19    <supports-screens android:resizeable="true" />
+19-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:16:5-51
+19-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:16:23-48
+20
+21    <application
+21-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:18:5-41:19
+22        android:allowBackup="true"
+22-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:19:9-35
+23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+23-->[androidx.core:core:1.1.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\2c7f471681a49d63d402f2d17cb4bdb8\core-1.1.0\AndroidManifest.xml:24:18-86
+24        android:icon="@mipmap/ic_launcher"
+24-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:20:9-43
+25        android:label="@string/tfe_is_app_name"
+25-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:21:9-48
+26        android:roundIcon="@mipmap/ic_launcher"
+26-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:22:9-48
+27        android:supportsRtl="true"
+27-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:23:9-35
+28        android:theme="@style/AppTheme.ImageSegmentation" >
+28-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:24:9-58
+29        <activity android:name="org.tensorflow.lite.examples.imagesegmentation.BrowseGoogleDrive" />
+29-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:26:9-64
+29-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:26:19-52
+30        <activity
+30-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:27:9-36:20
+31            android:name="org.tensorflow.lite.examples.imagesegmentation.MainActivity"
+31-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:28:13-41
+32            android:exported="true"
+32-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:29:13-36
+33            android:screenOrientation="portrait" >
+33-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:30:13-49
+34            <intent-filter>
+34-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:31:13-35:29
+35                <action android:name="android.intent.action.MAIN" />
+35-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:32:17-69
+35-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:32:25-66
+36
+37                <category android:name="android.intent.category.LAUNCHER" />
+37-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:34:17-77
+37-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:34:27-74
+38            </intent-filter>
+39        </activity>
+40
+41        <meta-data
+41-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:38:9-40:69
+42            android:name="com.google.android.gms.version"
+42-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:39:13-58
+43            android:value="@integer/google_play_services_version" />
+43-->E:\RA\minet\AndroidApp\app\src\main\AndroidManifest.xml:40:13-66
+44
+45        <activity
+45-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:23:9-27:75
+46            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+46-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:24:13-93
+47            android:excludeFromRecents="true"
+47-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:25:13-46
+48            android:exported="false"
+48-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:26:13-37
+49            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+49-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:27:13-72
+50        <!--
+51            Service handling Google Sign-In user revocation. For apps that do not integrate with
+52            Google Sign-In, this service will never be started.
+53        -->
+54        <service
+54-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:33:9-36:110
+55            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+55-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:34:13-89
+56            android:exported="true"
+56-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:35:13-36
+57            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" />
+57-->[com.google.android.gms:play-services-auth:18.0.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\917f6419c2e715335fcd6690d5183f12\play-services-auth-18.0.0\AndroidManifest.xml:36:13-107
+58
+59        <activity
+59-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\a50bbbd3b944a6510db07d1e98234c58\play-services-base-17.1.0\AndroidManifest.xml:23:9-26:75
+60            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+60-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\a50bbbd3b944a6510db07d1e98234c58\play-services-base-17.1.0\AndroidManifest.xml:24:13-79
+61            android:exported="false"
+61-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\a50bbbd3b944a6510db07d1e98234c58\play-services-base-17.1.0\AndroidManifest.xml:25:13-37
+62            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+62-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\a50bbbd3b944a6510db07d1e98234c58\play-services-base-17.1.0\AndroidManifest.xml:26:13-72
+63
+64        <provider
+64-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\b3f9fb34b2b953a92e098c181f82f79f\lifecycle-process-2.2.0\AndroidManifest.xml:25:9-29:43
+65            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+65-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\b3f9fb34b2b953a92e098c181f82f79f\lifecycle-process-2.2.0\AndroidManifest.xml:26:13-79
+66            android:authorities="org.tensorflow.lite.examples.imagesegmentation.lifecycle-process"
+66-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\b3f9fb34b2b953a92e098c181f82f79f\lifecycle-process-2.2.0\AndroidManifest.xml:27:13-69
+67            android:exported="false"
+67-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\b3f9fb34b2b953a92e098c181f82f79f\lifecycle-process-2.2.0\AndroidManifest.xml:28:13-37
+68            android:multiprocess="true" />
+68-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\siddhesh\.gradle\caches\transforms-2\files-2.1\b3f9fb34b2b953a92e098c181f82f79f\lifecycle-process-2.2.0\AndroidManifest.xml:29:13-40
+69    </application>
+70
+71</manifest>

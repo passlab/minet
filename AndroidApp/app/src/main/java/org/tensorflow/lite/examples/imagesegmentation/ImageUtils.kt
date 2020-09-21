@@ -154,7 +154,7 @@ abstract class ImageUtils {
       bitmapIn: Bitmap,
       width: Int,
       height: Int,
-      mean: Float = 0.0f,
+      mean: Float = 255.0f,
       std: Float = 255.0f
     ): ByteBuffer {
       val bitmap = scaleBitmapAndKeepRatio(bitmapIn, width, height)
@@ -162,6 +162,7 @@ abstract class ImageUtils {
       inputImage.order(ByteOrder.nativeOrder())
       inputImage.rewind()
 
+        // bitmap.getPixels not returning the value python returns for an image; check with Nihit on what to do
       val intValues = IntArray(width * height)
       bitmap.getPixels(intValues, 0, width, 0, 0, width, height)
       var pixel = 0
@@ -172,9 +173,10 @@ abstract class ImageUtils {
           // Normalize channel values to [-1.0, 1.0]. This requirement varies by
           // model. For example, some models might require values to be normalized
           // to the range [0.0, 1.0] instead.
-          inputImage.putFloat(((value shr 16 and 0xFF) - mean) / std)
-          inputImage.putFloat(((value shr 8 and 0xFF) - mean) / std)
-          inputImage.putFloat(((value and 0xFF) - mean) / std)
+          inputImage.putFloat(((value shr 16 and 0xFF) / std))
+          inputImage.putFloat(((value shr 8 and 0xFF) / std))
+          inputImage.putFloat(((value and 0xFF) / std))
+          //inputImage.putFloat(value/ 255.0f);
         }
       }
 

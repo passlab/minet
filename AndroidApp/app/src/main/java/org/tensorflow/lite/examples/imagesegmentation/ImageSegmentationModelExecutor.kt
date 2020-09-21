@@ -63,8 +63,11 @@ class ImageSegmentationModelExecutor(
 
   init {
 
-    interpreter = getInterpreter(context, imageSegmentationModel, useGPU)
-    segmentationMasks = ByteBuffer.allocateDirect(1 * imageSize * imageSize * NUM_CLASSES * 4)
+    //interpreter = getInterpreter(context, imageSegmentationModel, useGPU)
+    interpreter = getInterpreter(context, cellSegmentationModel, useGPU)
+
+    //segmentationMasks = ByteBuffer.allocateDirect(1 * imageSize * imageSize * NUM_CLASSES * 4)
+    segmentationMasks=ByteBuffer.allocateDirect(1 * imageSize * imageSize * NUM_CLASSES_FOR_CELL *4)
     segmentationMasks.order(ByteOrder.nativeOrder())
   }
 
@@ -189,6 +192,7 @@ class ImageSegmentationModelExecutor(
     backgroundImage: Bitmap,
     colors: IntArray
   ): Triple<Bitmap, Bitmap, Set<Int>> {
+    //val conf = Bitmap.Config.ARGB_8888
     val conf = Bitmap.Config.ARGB_8888
     val maskBitmap = Bitmap.createBitmap(imageWidth, imageHeight, conf)
     val resultBitmap = Bitmap.createBitmap(imageWidth, imageHeight, conf)
@@ -198,6 +202,7 @@ class ImageSegmentationModelExecutor(
         imageWidth,
         imageHeight
       )
+
     val mSegmentBits = Array(imageWidth) { IntArray(imageHeight) }
     val itemsFound = HashSet<Int>()
     inputBuffer.rewind()
@@ -205,11 +210,11 @@ class ImageSegmentationModelExecutor(
     for (y in 0 until imageHeight) {
       for (x in 0 until imageWidth) {
         var maxVal = 0f
-        mSegmentBits[x][y] = 0
+        mSegmentBits[x][y] = 1
 
-        for (c in 0 until NUM_CLASSES) {
+        for (c in 0 until NUM_CLASSES_FOR_CELL) {
           val value = inputBuffer
-            .getFloat((y * imageWidth * NUM_CLASSES + x * NUM_CLASSES + c) * 4)
+            .getFloat((y * imageWidth * NUM_CLASSES_FOR_CELL + x * NUM_CLASSES_FOR_CELL + c) * 4)
           if (c == 0 || value > maxVal) {
             maxVal = value
             mSegmentBits[x][y] = c
@@ -222,6 +227,7 @@ class ImageSegmentationModelExecutor(
           scaledBackgroundImage.getPixel(x, y)
         )
         resultBitmap.setPixel(x, y, newPixelColor)
+        //resultBitmap.setPixel(x, y,Color.BLACK);
         maskBitmap.setPixel(x, y, colors[mSegmentBits[x][y]])
       }
     }
@@ -232,24 +238,33 @@ class ImageSegmentationModelExecutor(
   companion object {
 
     private const val TAG = "ImageSegmentationMExec"
-    private const val imageSegmentationModel = "deeplabv3_257_mv_gpu.tflite"
-    private const val imageSize = 257
+    //private const val imageSegmentationModel = "deeplabv3_257_mv_gpu.tflite"
+    private const val cellSegmentationModel = "UNet.tflite"
+    private const val imageSize = 256
     const val NUM_CLASSES = 21
-    private const val IMAGE_MEAN = 128.0f
-    private const val IMAGE_STD = 128.0f
+    const val NUM_CLASSES_FOR_CELL = 2;
+    private const val IMAGE_MEAN = 255.0f
+    private const val IMAGE_STD = 255.0f
 
-    val segmentColors = IntArray(NUM_CLASSES)
-    val labelsArrays = arrayOf(
+    //val segmentColors = IntArray(NUM_CLASSES)
+    val segmentColors=IntArray(NUM_CLASSES_FOR_CELL)
+    /*val labelsArrays = arrayOf(
       "background", "aeroplane", "bicycle", "bird", "boat", "bottle", "bus",
       "car", "cat", "chair", "cow", "dining table", "dog", "horse", "motorbike",
       "person", "potted plant", "sheep", "sofa", "train", "tv"
+    )*/
+
+    val labelsArrays = arrayOf(
+            "background", "cell"
     )
 
     init {
 
       val random = Random(System.currentTimeMillis())
-      segmentColors[0] = Color.TRANSPARENT
-      for (i in 1 until NUM_CLASSES) {
+      //segmentColors[0] = Color.TRANSPARENT
+        segmentColors[0] = Color.BLACK
+        segmentColors[1] = Color.WHITE
+      /*for (i in 1 until NUM_CLASSES_FOR_CELL) {
         segmentColors[i] = Color.argb(
           (128),
           getRandomRGBInt(
@@ -262,7 +277,7 @@ class ImageSegmentationModelExecutor(
             random
           )
         )
-      }
+        }*/
     }
 
     private fun getRandomRGBInt(random: Random) = (255 * random.nextFloat()).toInt()
