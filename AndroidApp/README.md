@@ -6,7 +6,9 @@ The app starts with https://github.com/tensorflow/examples/tree/master/lite/exam
 2. Clone the repository from https://github.com/passlab/minet.git.
 3. Open Android Studio and navigate to minet/AndroidApp and open the project in android studio using open project option, let the project build.
 4. You can either directly install the application on your phone by downloading it from https://drive.google.com/file/d/1SXi20skmdHsJ0qn-NrNLb5Eo1EFFYcof/view?usp=sharing. \
-   After you download the apk and open it, it will prompt you to allow installing applications from unknow sources, you can find this option in your developer options on your        andrid device. Some android device have developer options enabled while others don't, to enable developer options - click 5 to 6 times on the build number of your device found in settings (usually works), or look up for a tutorial on youtube **How to enable developer options on android device**. 
+   After you download the apk and open it, it will prompt you to allow installing applications from unknow sources, you can find this option in your developer options on your andorid device. 
+   Some android device have developer options enabled while others don't, to enable developer options - click 5 to 6 times on the build number of your device found in settings (usually works), or look up for a tutorial on youtube **How to enable developer options on android device**. \
+  
    <img src="https://github.com/passlab/minet/blob/master/AndroidApp/media/Screenshot_20200920-233017.png" height="500" width="400">
    <img src="https://github.com/passlab/minet/blob/master/AndroidApp/media/Screenshot_20200920-211938.png" height="500" width="400">
    <img src="https://github.com/passlab/minet/blob/master/AndroidApp/media/Screenshot_20200920-212002.png" height="500" width="400">
