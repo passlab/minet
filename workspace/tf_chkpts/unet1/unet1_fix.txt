@@ -1,0 +1,51 @@
+1 input_1 8 6
+2 conv2d_1/convolution 8 6 8 4 8 5 8 8
+3 activation_1/Relu 8 4 8 4
+4 conv2d_2/convolution 8 4 8 4 8 9 8 6
+5 activation_2/Relu 8 4 8 4
+6 max_pooling2d_1/MaxPool 8 4 8 4
+7 conv2d_3/convolution 8 4 8 5 8 9 8 5
+8 activation_3/Relu 8 5 8 5
+9 conv2d_4/convolution 8 5 8 5 8 9 8 5
+10 activation_4/Relu 8 5 8 5
+11 max_pooling2d_2/MaxPool 8 5 8 5
+12 conv2d_5/convolution 8 5 8 5 8 10 8 5
+13 activation_5/Relu 8 5 8 5
+14 conv2d_6/convolution 8 5 8 5 8 10 8 5
+15 activation_6/Relu 8 5 8 5
+16 max_pooling2d_3/MaxPool 8 5 8 5
+17 conv2d_7/convolution 8 5 8 5 8 10 8 5
+18 activation_7/Relu 8 5 8 5
+19 conv2d_8/convolution 8 5 8 5 8 11 8 5
+20 activation_8/Relu 8 5 8 5
+21 max_pooling2d_4/MaxPool 8 5 8 5
+22 conv2d_9/convolution 8 5 8 5 8 11 8 5
+23 activation_9/Relu 8 5 8 5
+24 conv2d_10/convolution 8 5 8 5 8 11 8 5
+25 activation_10/Relu 8 5 8 5
+26 up_sampling2d_1/ResizeBilinear 8 5 8 5
+27 concatenate_1/concat 8 5 8 5 8 5
+28 conv2d_11/convolution 8 5 8 5 8 12 8 5
+29 activation_11/Relu 8 5 8 5
+30 conv2d_12/convolution 8 5 8 5 8 10 8 6
+31 activation_12/Relu 8 5 8 5
+32 up_sampling2d_2/ResizeBilinear 8 5 8 5
+33 concatenate_2/concat 8 5 8 5 8 5
+34 conv2d_13/convolution 8 5 8 5 8 11 8 5
+35 activation_13/Relu 8 5 8 5
+36 conv2d_14/convolution 8 5 8 5 8 10 8 6
+37 activation_14/Relu 8 5 8 5
+38 up_sampling2d_3/ResizeBilinear 8 5 8 5
+39 concatenate_3/concat 8 5 8 5 8 5
+40 conv2d_15/convolution 8 5 8 5 8 11 8 6
+41 activation_15/Relu 8 5 8 5
+42 conv2d_16/convolution 8 5 8 4 8 10 8 6
+43 activation_16/Relu 8 4 8 4
+44 up_sampling2d_4/ResizeBilinear 8 4 8 4
+45 concatenate_4/concat 8 4 8 4 8 4
+46 conv2d_17/convolution 8 4 8 5 8 11 8 6
+47 activation_17/Relu 8 5 8 5
+48 conv2d_18/convolution 8 5 8 4 8 10 8 6
+49 activation_18/Relu 8 4 8 4
+50 conv2d_19/convolution 8 4 8 1 8 8 8 9
+51 conv2d_19/Relu 8 1 8 1

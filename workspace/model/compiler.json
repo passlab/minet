@@ -1,0 +1,336 @@
+{
+    "arguments": {
+        "aggressivecpulayermustgo": false,
+        "anew": null,
+        "approximate": false,
+        "banditpre": null,
+        "barrier": false,
+        "batch_sz": 1,
+        "bridges": [
+            "Concat"
+        ],
+        "bytesperpixels": 1,
+        "checktensorshapes": false,
+        "concatstrategy": null,
+        "conv_1x1_s2": false,
+        "cpulayermustgo": true,
+        "customreplication": null,
+        "customtiling": null,
+        "cut": null,
+        "ddr": 256,
+        "deconvinfpga": true,
+        "dedicateddsp": null,
+        "device": "FPGA",
+        "dsp": 14,
+        "eltnoreplacelayer": false,
+        "eltwiseoutputs": false,
+        "fPartition": false,
+        "fancyreplications": false,
+        "fc": false,
+        "fcinfpga": true,
+        "fcreshape": false,
+        "finalnode": [
+            "conv2d_10/BiasAdd"
+        ],
+        "forceweights": null,
+        "forceweightsfullyconnected": false,
+        "fromtensorflow": true,
+        "frontendonly": false,
+        "generatefile": "./frozen_graph_partition_03.pb",
+        "graph_savepath": null,
+        "inclusive": false,
+        "inputcut": null,
+        "laodschedule": null,
+        "lasttensorbyname": null,
+        "leavescalealone": false,
+        "loadmode": "binary",
+        "loadpickle": null,
+        "manasadebugmode": null,
+        "manualbatch": false,
+        "manualdeconv": false,
+        "maximumasrelu": false,
+        "memory": 9,
+        "mixmemorystrategy": true,
+        "name_postfix": "_partition_03",
+        "networkfile": "/workspace/tutorial/Vitis-AI-Tutorials/files/workspace/tf_chkpts/unet1/frozen_graph.pb",
+        "networkfilename": "/workspace/tutorial/Vitis-AI-Tutorials/files/workspace/tf_chkpts/unet1/frozen_graph.pb",
+        "noconvexity": false,
+        "nodynamicscaling": false,
+        "noreplication": false,
+        "notcaffeanew": false,
+        "outputz": [
+            "conv2d_10/BiasAdd"
+        ],
+        "parallelism": false,
+        "parallelismgraphalgorithm": "tfs",
+        "parallelismstrategy": null,
+        "parallelread": null,
+        "partitioning": false,
+        "pingpongsplit": true,
+        "pipelineconvmaxpool": true,
+        "placeholdershape": {
+            "input_1": [
+                1,
+                224,
+                224,
+                3
+            ]
+        },
+        "pngfile": null,
+        "poolingaround": false,
+        "quant_cfgfile": "/workspace/tutorial/Vitis-AI-Tutorials/files/workspace/tf_chkpts/unet1/unet1_fix.txt",
+        "quantz": "",
+        "rankdir": "BT",
+        "relu6": false,
+        "reluaround": false,
+        "savePyfunc": true,
+        "savepickle": null,
+        "saveschedule": null,
+        "scalepipeline": false,
+        "schedulefile": null,
+        "splitonly": false,
+        "squeeze": false,
+        "startnode": [
+            "activation_9/Relu"
+        ],
+        "strategy": "all",
+        "usedeephi": false,
+        "verbose": false,
+        "verbositylevel": 1,
+        "versionjson": null,
+        "weights": "./frozen_graph_partition_03.pb",
+        "xclbin": "/opt/xilinx/overlaybins/xdnnv3/",
+        "xdnnv3": true
+    },
+    "batchSize": 1,
+    "cmd": "vaicompiler.py",
+    "env": "environ({'CONDA_SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/xilinx/xrt/lib:/usr/local/lib:/usr/lib:/usr/lib/x86_64-linux-gnu:/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'CONDA_EXE': '/opt/vitis_ai/conda/bin/conda', 'TZ': 'America/Denver', 'SUDO_GID': '0', 'VAI_PYTHON_DIR': '/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib/python3.6/site-packages', 'HOSTNAME': 'cci-carina', 'USERNAME': 'yshi10', 'VAI_DNNC_COMPILER_ROOT': '/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/bin', 'CONDA_PREFIX': '/opt/vitis_ai/conda/envs/vitis-ai-tensorflow', 'SUDO_COMMAND': '/bin/bash', 'XILINX_XRT': '/opt/xilinx/xrt', '_CE_M': '', 'VAI_ROOT': '/opt/vitis_ai', 'USER': 'yshi10', 'INTERNAL_BUILD': '1', 'VERSION': 'latest', 'DATE': 'Mon Oct 26 08:12:39 MDT 2020', 'PWD': '/workspace/alveo/examples/tensorflow', 'HOME': '/home/yshi10', 'CONDA_PYTHON_EXE': '/opt/vitis_ai/conda/bin/python', 'SUDO_USER': 'root', '_CE_CONDA': '', 'LIBRARY_PATH': '/usr/local/lib', 'CONDA_PROMPT_MODIFIER': '(vitis-ai-tensorflow) ', 'SUDO_UID': '0', 'MAIL': '/var/mail/yshi10', 'SHELL': '/bin/bash', 'TERM': 'xterm', 'SHLVL': '1', 'PYTHONPATH': '/opt/vitis_ai/compiler', 'LOGNAME': 'yshi10', 'PATH': '/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/bin:/opt/vitis_ai/conda/condabin:/opt/vitis_ai/conda/bin:/opt/vitis_ai/utility:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'CONDA_DEFAULT_ENV': 'vitis-ai-tensorflow', '_': '/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/bin/python', 'OLDPWD': '/workspace', 'QT_QPA_PLATFORM_PLUGIN_PATH': '/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib/python3.6/site-packages/cv2/qt/plugins', 'QT_QPA_FONTDIR': '/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib/python3.6/site-packages/cv2/qt/fonts', 'KMP_DUPLICATE_LIB_OK': 'True', 'KMP_INIT_AT_FORK': 'FALSE'})",
+    "first_layer": 0,
+    "inputddr": 917504,
+    "inputs": [
+        {
+            "input_address": 0,
+            "input_name": "activation_9/Relu",
+            "next_layers": [
+                "conv2d_10/convolution"
+            ]
+        }
+    ],
+    "last_layer": 2,
+    "moveops": 200704,
+    "network": [
+        {
+            "active": 1,
+            "bottoms": [],
+            "contribute": "activation_9/Relu",
+            "deeppy": [
+                [],
+                [
+                    [
+                        8,
+                        5
+                    ]
+                ],
+                [
+                    8,
+                    5
+                ],
+                null,
+                false
+            ],
+            "layer": "activation_9/Relu: type=Input, sizes=None, shapes=None, sched 0 Kernel None Strides None Padding None MUTE CODE",
+            "memory_description": "am_to_am",
+            "merged": [
+                "activation_9/Relu"
+            ],
+            "name": "activation_9/Relu",
+            "ops": 200704,
+            "outputshapes": [
+                1,
+                1024,
+                14,
+                14
+            ],
+            "schedule": 1,
+            "type": "Input",
+            "xdnn_instr": "2 XNGather 0x0 0x0 14 14 1024 0 1 1 0 13 0 1 # activation_9/Relu_blob",
+            "xdnn_kv": {
+                "XNOp": "XNGather",
+                "a0": "0",
+                "b1": "1",
+                "c1": "1",
+                "comment": "activation_9/Relu_blob",
+                "ddr_src": "0x0",
+                "end_row": "13",
+                "id": "2",
+                "inchan": "1024",
+                "insize_h": "14",
+                "insize_w": "14",
+                "sep": "#",
+                "slice": "0",
+                "srcAddrReadFromImgQ": "1",
+                "start_row": "0",
+                "uram_dest": "0x0"
+            },
+            "xdnn_list": null
+        },
+        {
+            "active": 1,
+            "bottoms": [
+                "activation_9/Relu"
+            ],
+            "deeppy": [
+                [
+                    [
+                        8,
+                        5
+                    ]
+                ],
+                [
+                    [
+                        8,
+                        5
+                    ]
+                ],
+                [
+                    8,
+                    11
+                ],
+                [
+                    8,
+                    5
+                ],
+                false
+            ],
+            "layer": "conv2d_10/convolution: type=Convolution, sizes=None, shapes=None, sched 1 Kernel SizeType(batches=1024, channels=1024, height=3, width=3) Strides SizeType(batches=1, channels=1, height=1, width=1) Padding [1, 1]",
+            "memory_description": "am_to_am",
+            "merged": [
+                "conv2d_10/convolution",
+                "conv2d_10/BiasAdd"
+            ],
+            "name": "conv2d_10/convolution",
+            "ops": 3699376128,
+            "outputshapes": [
+                1,
+                1024,
+                14,
+                14
+            ],
+            "schedule": 1,
+            "type": "Convolution",
+            "xdnn_instr": "1 XNConv conv2d_10/convolution 3 3 1 1 1 1 1 1 11 128 7 0 1 0x0 14 14 1024 0x31000 14 14 1024 0 # am_to_am",
+            "xdnn_kv": {
+                "Bypass_Perf_Opt": "0",
+                "XNOp": "XNConv",
+                "bias": "1",
+                "dilation_h": "1",
+                "dilation_w": "1",
+                "id": "1",
+                "inaddr": "0x0",
+                "inchan": "1024",
+                "insize_h": "14",
+                "insize_w": "14",
+                "kernel_h": "3",
+                "kernel_w": "3",
+                "name": "conv2d_10/convolution",
+                "outaddr": "0x31000",
+                "outchan": "1024",
+                "outsize_h": "14",
+                "outsize_w": "14",
+                "padding_h": "1",
+                "padding_w": "1",
+                "postshift": "7",
+                "preshift": "11",
+                "relu": "0",
+                "scale": "128",
+                "strides_h": "1",
+                "strides_w": "1"
+            },
+            "xdnn_list": null
+        },
+        {
+            "active": 1,
+            "bottoms": [
+                "conv2d_10/convolution"
+            ],
+            "deeppy": [
+                [
+                    [
+                        8,
+                        5
+                    ]
+                ],
+                [
+                    [
+                        8,
+                        5
+                    ]
+                ],
+                [
+                    8,
+                    11
+                ],
+                [
+                    8,
+                    5
+                ],
+                false
+            ],
+            "layer": "conv2d_10/convolution_output: type=Output, sizes=None, shapes=None, sched 2 Kernel SizeType(batches=1024, channels=1024, height=3, width=3) Strides SizeType(batches=1, channels=1, height=1, width=1) Padding [1, 1]",
+            "memory_description": "am_to_ddr",
+            "merged": [
+                "conv2d_10/convolution_output"
+            ],
+            "name": "conv2d_10/convolution_output",
+            "ops": 917504,
+            "outputshapes": [
+                1,
+                1024,
+                14,
+                14
+            ],
+            "schedule": 2,
+            "type": "Output",
+            "xdnn_instr": "2 XNScatter 0x31000 0x0 14 14 1024 0 1 1 0 13 0 1 # Output conv2d_10/convolution_output",
+            "xdnn_kv": {
+                "XNOp": "XNScatter",
+                "a0": "0",
+                "b1": "1",
+                "c1": "1",
+                "comment": "Output",
+                "ddr_dest": "0x0",
+                "destAddrReadFromImgQ": "1",
+                "end_row": "13",
+                "id": "2",
+                "outchan": "1024",
+                "outsize_h": "14",
+                "outsize_w": "14",
+                "sep": "#",
+                "slice": "0",
+                "start_row": "0",
+                "uram_src": "0x31000"
+            },
+            "xdnn_list": null
+        }
+    ],
+    "ops": 3700494336,
+    "outputddr": 917504,
+    "outputs": [
+        {
+            "output_address": 0,
+            "output_name": "conv2d_10/convolution_output",
+            "output_name_2": "conv2d_10/convolution_output",
+            "previous_layers": [
+                "conv2d_10/convolution"
+            ],
+            "previous_tensors": [
+                "conv2d_10/convolution"
+            ]
+        }
+    ],
+    "unsupported": {
+        "count": 0,
+        "list": {}
+    },
+    "version": "2.2.1"
+}

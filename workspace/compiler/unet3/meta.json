@@ -1,0 +1,8 @@
+{
+    "lib": "libvart-dpu-runner.so",
+    "filename": "unet3.xmodel",
+    "kernel": [
+        "subgraph_concatenate_1\/concat(fix)"
+    ],
+    "target": "DPUCAHX8H_VAI1_2_U50"
+}

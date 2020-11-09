@@ -1,0 +1,12 @@
+{
+    "compiler": "/workspace/tutorial/Vitis-AI-Tutorials/files/workspace/model/compiler.json",
+    "config_file": "",
+    "filename": "",
+    "kernel": "xdnn",
+    "lib": "{LIBXDNN_PATH}",
+    "quantizer": "/workspace/tutorial/Vitis-AI-Tutorials/files/workspace/model/quantizer.json",
+    "target": "DPUCADX8G",
+    "weights": "/workspace/tutorial/Vitis-AI-Tutorials/files/workspace/model/weights.h5",
+    "workdirectory": "/workspace/tutorial/Vitis-AI-Tutorials/files/workspace/model/",
+    "xclbin": "/opt/xilinx/overlaybins/xdnnv3"
+}

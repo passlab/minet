@@ -1,0 +1,2 @@
+model_checkpoint_path: "/workspace/tutorial/Vitis-AI-Tutorials/files/code/../workspace/tf_chkpts/unet1/float_model.ckpt"
+all_model_checkpoint_paths: "/workspace/tutorial/Vitis-AI-Tutorials/files/code/../workspace/tf_chkpts/unet1/float_model.ckpt"
