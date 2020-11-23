@@ -116,7 +116,9 @@ python vaicompiler.py
 
 ```
 After investage, we finally find the code which used for gerenate the model file. However, this code has some issues with transfer the model file into Hareware code.
-In this step, we also modify the code in "/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib/python3.6/site-packages/vaic/dpuv1/utils/xdnn_util_tf.py" and code in "/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib/python3.6/site-packages/vai/dpuv1/utils/xdnn_rt_tf.py(xdnn_rt_base.py)". For now, it still not works.
+In this step, we also modify the code in "/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib/python3.6/site-packages/vaic/dpuv1/utils/xdnn_util_tf.py" and code in "/opt/vitis_ai/conda/envs/vitis-ai-tensorflow/lib/python3.6/site-packages/vai/dpuv1/utils/xdnn_rt_tf.py(xdnn_rt_base.py)". For now, it still does not works.
+
+The laste file that I modified is vaic/dpuv1/bin/xfdnn_compiler_tensorflow.py. From line 131 to 194, the try generated code does not works.
     
   9. Build the code with command:
 
