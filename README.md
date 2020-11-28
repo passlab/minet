@@ -86,14 +86,11 @@ ai_q_tensorflow quantize --input_frozen_graph ./rozen_graph.pb
  6. Evaluate the quantized graph(optional) with command:
  
 ```
-ai_q_tensorflow quantize --input_frozen_graph ./rozen_graph.pb 
-                                                --input_nodes "input_1" 
-                                                --input_shapes ?,224,224,3 
-                                                --output_nodes "conv2d_19/Relu" 
-                                                --output_dir ../workspace/tf_chkpts/unet1/ 
-                                                --input_fn graph_input_fn.calib_input 
-                                                --calib_iter 10
-                                                --gpu 0
+python eval_quantized_graph.py --graph=./ uantize_eval_model.pb 
+                                                            --input_node="input_1" 
+                                                            --output_node="conv2d_19/Relu" 
+                                                            --gpu=0
+
  ```
  This is optional step for evaluate the quantized graph. Make sure they precision and the accuracy of your network will not significant reduced after quantized.
     
