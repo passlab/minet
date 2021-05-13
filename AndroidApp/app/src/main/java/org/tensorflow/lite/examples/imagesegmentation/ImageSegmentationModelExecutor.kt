@@ -17,13 +17,14 @@
 package org.tensorflow.lite.examples.imagesegmentation
 
 import android.content.Context
+import android.content.res.AssetFileDescriptor
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.Uri
 import android.os.SystemClock
 import androidx.core.graphics.ColorUtils
 import android.util.Log
-import java.io.FileInputStream
-import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
@@ -32,6 +33,11 @@ import kotlin.collections.HashSet
 import kotlin.random.Random
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.gpu.GpuDelegate
+import java.io.*
+import java.net.URI
+import android.provider.MediaStore
+import android.webkit.MimeTypeMap
+
 
 /**
  * Class responsible to run the Image Segmentation model.
@@ -47,13 +53,13 @@ import org.tensorflow.lite.gpu.GpuDelegate
  */
 class ImageSegmentationModelExecutor(
   context: Context,
-  private var useGPU: Boolean = false
+  private var useGPU: Boolean = false,
+  pathOfSelectedModel:Uri?
 ) {
   private var gpuDelegate: GpuDelegate? = null
 
   private val segmentationMasks: ByteBuffer
   private val interpreter: Interpreter
-
   private var fullTimeExecutionTime = 0L
   private var preprocessTime = 0L
   private var imageSegmentationTime = 0L
@@ -64,7 +70,7 @@ class ImageSegmentationModelExecutor(
   init {
 
     //interpreter = getInterpreter(context, imageSegmentationModel, useGPU)
-    interpreter = getInterpreter(context, cellSegmentationModel, useGPU)
+    interpreter = getInterpreter(context, cellSegmentationModel, pathOfSelectedModel,useGPU)
 
     //segmentationMasks = ByteBuffer.allocateDirect(1 * imageSize * imageSize * NUM_CLASSES * 4)
     segmentationMasks=ByteBuffer.allocateDirect(1 * imageSize * imageSize * NUM_CLASSES_FOR_CELL *4)
@@ -138,8 +144,9 @@ class ImageSegmentationModelExecutor(
   // base: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/java/demo/app/src/main/java/com/example/android/tflitecamerademo/ImageClassifier.java
   @Throws(IOException::class)
   private fun loadModelFile(context: Context, modelFile: String): MappedByteBuffer {
-    val fileDescriptor = context.assets.openFd(modelFile)
-    val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
+
+    var fileDescriptor: AssetFileDescriptor= context.assets.openFd(modelFile)
+    var inputStream= FileInputStream(fileDescriptor.fileDescriptor)
     val fileChannel = inputStream.channel
     val startOffset = fileDescriptor.startOffset
     val declaredLength = fileDescriptor.declaredLength
@@ -148,10 +155,56 @@ class ImageSegmentationModelExecutor(
     return retFile
   }
 
+
+  private fun loadModelFile(context:Context,pathOfSelectedModel:Uri):File{
+    val fileExtension = getFileExtension(context, pathOfSelectedModel)
+    val fileName = "temp_file" + if (fileExtension != null) ".$fileExtension" else ""
+
+    // Creating Temp file
+    val tempFile = File(context.cacheDir, fileName)
+    tempFile.createNewFile()
+
+    try {
+      val oStream = FileOutputStream(tempFile)
+      val inputStream = context.contentResolver.openInputStream(pathOfSelectedModel)
+
+      inputStream?.let {
+        copy(inputStream, oStream)
+      }
+
+      oStream.flush()
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+
+    return tempFile
+  }
+
+  private fun getFileExtension(context: Context, uri: Uri): String? {
+    val fileType: String? = context.contentResolver.getType(uri)
+    return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
+  }
+
+  @Throws(IOException::class)
+  private fun copy(source: InputStream, target: OutputStream) {
+    val buf = ByteArray(8192)
+    var length: Int
+    while (source.read(buf).also { length = it } > 0) {
+      target.write(buf, 0, length)
+    }
+  }
+
+  private fun uriToPath(uri: Uri): String {
+    val backupFile = File(uri.path)
+    val absolutePath = backupFile.absolutePath
+    return absolutePath.substring(absolutePath.indexOf(':') + 1)
+  }
+
   @Throws(IOException::class)
   private fun getInterpreter(
     context: Context,
     modelName: String,
+    pathOfSelectedModel: Uri?,
     useGpu: Boolean = false
   ): Interpreter {
     val tfliteOptions = Interpreter.Options()
@@ -163,8 +216,11 @@ class ImageSegmentationModelExecutor(
       tfliteOptions.addDelegate(gpuDelegate)
     }
 
-    return Interpreter(loadModelFile(context, modelName), tfliteOptions)
+    if(pathOfSelectedModel==null)
+      return Interpreter(loadModelFile(context, modelName), tfliteOptions)
+    else return Interpreter(loadModelFile(context,pathOfSelectedModel));
   }
+
 
   private fun formatExecutionLog(): String {
     val sb = StringBuilder()
@@ -245,7 +301,6 @@ class ImageSegmentationModelExecutor(
     const val NUM_CLASSES_FOR_CELL = 2;
     private const val IMAGE_MEAN = 255.0f
     private const val IMAGE_STD = 255.0f
-
     //val segmentColors = IntArray(NUM_CLASSES)
     val segmentColors=IntArray(NUM_CLASSES_FOR_CELL)
     /*val labelsArrays = arrayOf(

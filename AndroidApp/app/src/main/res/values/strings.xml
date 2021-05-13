@@ -8,5 +8,14 @@
     <string name="status_user_cancelled">User Cancelled</string>
     <string name="status_error">We found a problem: %1$s</string>
     <string name="not_open_file">Could not open file</string>
-
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>

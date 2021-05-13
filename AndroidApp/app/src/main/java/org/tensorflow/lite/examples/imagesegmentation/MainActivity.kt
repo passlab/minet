@@ -19,6 +19,7 @@ package org.tensorflow.lite.examples.imagesegmentation
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.Intent.createChooser
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.pm.PackageManager
@@ -35,13 +36,7 @@ import android.util.Log.DEBUG
 import android.util.TypedValue
 import android.view.animation.AnimationUtils
 import android.view.animation.BounceInterpolator
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.Switch
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.Auth
@@ -91,6 +86,8 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
   private var lastSavedFile = ""
   private var useGPU = false
   private val RC_SIGN_IN = 9001
+  private val PICK_MODEL_RESULT_CODE=100;
+  private var pathOfSelectedModel="";
   private lateinit var imageSegmentationModel: ImageSegmentationModelExecutor
   private val inferenceThread = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
   private val mainScope = MainScope()
@@ -105,6 +102,30 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
     setSupportActionBar(toolbar)
     supportActionBar?.setDisplayShowTitleEnabled(false)
 
+    val spinner: Spinner = findViewById(R.id.model_selector_spinner)
+// Create an ArrayAdapter using the string array and a default spinner layout
+
+    val listOfAvailModels=ArrayList<String>();
+    //listOfAvailModels.addAll(getAssets().list(""));
+    //val files = getAssets().list("");
+    /*for(String f:files){
+
+    }*/
+
+
+
+
+
+    ArrayAdapter.createFromResource(
+            this,
+            R.array.planets_array,
+            android.R.layout.simple_spinner_item
+    ).also { adapter ->
+      // Specify the layout to use when the list of choices appears
+      adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+      // Apply the adapter to the spinner
+      spinner.adapter = adapter
+    }
 
     //google signin
     val googleSignInOptions:GoogleSignInOptions= GoogleSignInOptions
@@ -144,13 +165,13 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
       }
     )
 
-    imageSegmentationModel = ImageSegmentationModelExecutor(this, useGPU)
+    imageSegmentationModel = ImageSegmentationModelExecutor(this, useGPU,null)
 
     useGpuSwitch.setOnCheckedChangeListener { _, isChecked ->
       useGPU = isChecked
       mainScope.async(inferenceThread) {
         imageSegmentationModel.close()
-        imageSegmentationModel = ImageSegmentationModelExecutor(this@MainActivity, useGPU)
+        imageSegmentationModel = ImageSegmentationModelExecutor(this@MainActivity, useGPU,null)
       }
     }
 
@@ -321,7 +342,16 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
 
     lastSavedFile = file.absolutePath
     enableControls(false)
-    viewModel.onApplyModel(file.absolutePath, imageSegmentationModel, inferenceThread)
+    // this is where I write the code to select a new model.
+
+      var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+      chooseFile.setType("*/*");
+      chooseFile = createChooser(chooseFile, "Choose a file");
+      startActivityForResult(chooseFile, PICK_MODEL_RESULT_CODE);
+
+      //imageSegmentationModel = ImageSegmentationModelExecutor(this, useGPU, pathOfSelectedModel)
+
+    //viewModel.onApplyModel(file.absolutePath, imageSegmentationModel, inferenceThread)
   }
 
 
@@ -341,9 +371,18 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
         if (resultCode == Activity.RESULT_OK && data != null) {
             val uri = data.getData()
             if (uri != null) {
-                openFileFromFilePicker(uri)
+                openFileImageFromFilePicker(uri)
             }
         }
+    }else if(requestCode==PICK_MODEL_RESULT_CODE){
+        var fileUri = data?.getData();
+        //var filePath = fileUri?.getPath();
+        /*if (fileURI!= null) {
+            pathOfSelectedModel=filePath
+        }*/
+
+        imageSegmentationModel = ImageSegmentationModelExecutor(this, useGPU, fileUri!!)
+        viewModel.onApplyModel(lastSavedFile, imageSegmentationModel, inferenceThread)
     }
 
     }
@@ -389,7 +428,7 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
         }
     }
 
-    private fun openFileFromFilePicker(uri: Uri) {
+    private fun openFileImageFromFilePicker(uri: Uri) {
         if (mDriveServiceHelper != null) {
             Log.d("BrowseGoogleDrive", "Opening " + uri.path!!)
 

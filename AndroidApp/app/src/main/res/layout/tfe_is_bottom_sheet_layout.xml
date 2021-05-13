@@ -30,6 +30,19 @@
         android:text="@string/tfe_is_gpu" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="select a model"
+        android:textSize="18sp"
+        android:textStyle="bold"></TextView>
+    <Spinner
+        android:id="@+id/model_selector_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select a model"/>
+
+    <TextView
         android:id="@+id/log_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
