@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
     setSupportActionBar(toolbar)
     supportActionBar?.setDisplayShowTitleEnabled(false)
 
-    val spinner: Spinner = findViewById(R.id.model_selector_spinner)
+
 // Create an ArrayAdapter using the string array and a default spinner layout
 
     val listOfAvailModels=ArrayList<String>();
@@ -123,8 +123,6 @@ class MainActivity : AppCompatActivity(), CameraFragment.OnCaptureFinished {
     ).also { adapter ->
       // Specify the layout to use when the list of choices appears
       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-      // Apply the adapter to the spinner
-      spinner.adapter = adapter
     }
 
     //google signin
