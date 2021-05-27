@@ -22,4 +22,5 @@ The app starts with https://github.com/tensorflow/examples/tree/master/lite/exam
 
 6. Once you install and open the application on your android device, allow the permissions needed. 
 7. App is ready to be used. Working video:
+	[demo](https://github.com/passlab/minet/blob/master/AndroidApp/media/Demo.gif)
    
