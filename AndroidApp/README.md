@@ -5,7 +5,7 @@ The app starts with https://github.com/tensorflow/examples/tree/master/lite/exam
 1. Install Android studio from https://developer.android.com/studio/install for your system.
 2. Clone the repository from https://github.com/passlab/minet.git.
 3. Open Android Studio and navigate to minet/AndroidApp and open the project in android studio using open project option, let the project build.
-4. You can either directly install the application on your phone by downloading the APK file from . \
+4. You can either directly install the application on your phone by downloading the APK file from https://github.com/passlab/minet/blob/master/AndroidApp/ImageSegmentationApp.apk. \
    After you download the apk and open it, it will prompt you to allow installing applications from unknow sources, you can find this option in your developer options on your andorid device. 
    Some android device have developer options enabled while others don't, to enable developer options - click 5 to 6 times on the build number of your device found in settings (usually works), or look up for a tutorial on youtube **How to enable developer options on android device**. \
   
@@ -22,4 +22,4 @@ The app starts with https://github.com/tensorflow/examples/tree/master/lite/exam
 
 6. Once you install and open the application on your android device, allow the permissions needed. 
 7. App is ready to be used. Working video:
-   https://drive.google.com/file/d/1EADLE2-ogOFq8pP-VL3pPQmB85XhqH9x/view?usp=sharing
+   
